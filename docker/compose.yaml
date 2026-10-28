@@ -1,0 +1,20 @@
+services:
+  orca-desktop:
+    build:
+      context: .
+      args:
+        ORCA_DEB_SHA256: ${ORCA_DEB_SHA256:?Set a trusted SHA-256 for the ORCA ARM64 package}
+    platform: linux/arm64
+    environment:
+      PUID: '1000'
+      PGID: '1000'
+      TZ: Europe/Berlin
+      CUSTOM_USER: ${ORCA_DESKTOP_USER:?Set a desktop username}
+      PASSWORD: ${ORCA_DESKTOP_PASSWORD:?Set a desktop password}
+    ports:
+      - '127.0.0.1:3001:3001'
+    volumes:
+      - orca-config:/config
+    shm_size: 1gb
+volumes:
+  orca-config:
