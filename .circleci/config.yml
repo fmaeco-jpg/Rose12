@@ -1,0 +1,19 @@
+version: 2.1
+
+jobs:
+  test:
+    docker:
+      - image: cimg/python:3.12
+    steps:
+      - checkout
+      - run:
+          name: Shell-Skripte prüfen
+          command: sh -n guest/*.sh
+      - run:
+          name: Tests ausführen
+          command: python3 -m unittest discover -s tests -v
+
+workflows:
+  main:
+    jobs:
+      - test
